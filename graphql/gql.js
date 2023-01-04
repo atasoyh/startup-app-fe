@@ -18,6 +18,19 @@ export const COMPANY_QUERY = gql`
   }
 `;
 
+export const ALL_PHASES_COMPLATIONS_QUERY = gql`
+  query company($id: ID!) {
+    company(id: $id) {
+      phases {
+        id
+        tasks {
+          completed
+        }
+      }
+    }
+  }
+`;
+
 export const PHASE_QUERY = gql`
   query phase($id: ID!) {
     phase(id: $id){

@@ -1,31 +1,34 @@
 import { useQuery } from "@apollo/client";
-import { CompanyName, Container, PhaseList } from "./company.styles";
+import { Button, CompanyName, Container, PhaseList } from "./company.styles";
 import Phase from "../phase";
 import { COMPANY_QUERY } from "../../graphql/gql";
+import useAllPhasesCompletionsStatus from "../../hooks/useAllPhasesCompletionStatus";
 
-const Company = () => {
+const Company = ({ id }) => {
   const { data, loading, error } = useQuery(COMPANY_QUERY, {
-    variables: { id: "company_1" },
+    variables: { id },
   });
+  const { allPhasesCompleted } = useAllPhasesCompletionsStatus({ id });
 
   if (loading) {
     return <>Loading...</>;
   }
 
   if (error) {
-    console.log(error);
     return <>Error...</>;
   }
 
   const { company } = data;
+
   return (
     <Container>
-      <CompanyName>{company.name}</CompanyName>
+      <CompanyName>My Startup progress</CompanyName>
       <PhaseList>
-        {company.phases?.map((phase) => (
-          <Phase id={phase.id} key={phase.id} />
+        {company.phases?.map((phase, index) => (
+          <Phase id={phase.id} companyId={id} key={phase.id} index={index} />
         ))}
       </PhaseList>
+      <Button disabled={!allPhasesCompleted}>{`See what's next :)`}</Button>
     </Container>
   );
 };

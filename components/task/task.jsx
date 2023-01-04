@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { TASK_QUERY, UPDATE_TASK_MUTATION } from "../../graphql/gql";
 import { TaskInput, TaskName, TaskContainer } from "./task.styles";
 
-const Task = ({ id, phaseId }) => {
+const Task = ({ id, isDisabled }) => {
   const { data, loading, error } = useQuery(TASK_QUERY, { variables: { id } });
   const task = data?.task;
   const [updateTask] = useMutation(UPDATE_TASK_MUTATION, {
@@ -16,11 +16,11 @@ const Task = ({ id, phaseId }) => {
     return <>Error!</>;
   }
   return (
-    <TaskContainer>
+    <TaskContainer onClick={updateTask}>
       <TaskInput
         type={"checkbox"}
         checked={task.completed}
-        onChange={updateTask}
+        disabled={isDisabled}
       />
       <TaskName>{task.name}</TaskName>
     </TaskContainer>

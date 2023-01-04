@@ -1,12 +1,21 @@
 import { useQuery } from "@apollo/client";
 import { PHASE_QUERY } from "../../graphql/gql";
-import { CheckMark, PhaseContainer, PhaseName, TaskList } from "./phase.styles";
+import {
+  CheckMark,
+  PhaseContainer,
+  PhaseIndex,
+  PhaseName,
+  PhaseNameContainer,
+  TaskList,
+} from "./phase.styles";
 import Task from "../task";
+import usePhaseEditableStatus from "../../hooks/usePreviousPhasesCompletionStatus";
 
-const Phase = ({id}) => {
+const Phase = ({ companyId, id, index }) => {
   const { data, loading, error } = useQuery(PHASE_QUERY, {
     variables: { id },
   });
+  const { isDisabled } = usePhaseEditableStatus({ companyId, id });
   if (loading) {
     return <>Loading...</>;
   }
@@ -16,11 +25,16 @@ const Phase = ({id}) => {
   const { phase } = data;
   return (
     <PhaseContainer>
-      <PhaseName>{phase.name}</PhaseName>
-      {phase.tasks.every((task) => task.completed) && <CheckMark>✓</CheckMark>}
+      <PhaseNameContainer>
+        <PhaseIndex>{index}</PhaseIndex>
+        <PhaseName>{phase.name}</PhaseName>
+        {phase.tasks.every((task) => task.completed) && (
+          <CheckMark>✓</CheckMark>
+        )}
+      </PhaseNameContainer>
       <TaskList>
         {phase.tasks.map((task) => (
-          <Task key={task.id} id={task.id} />
+          <Task key={task.id} id={task.id} isDisabled={isDisabled} />
         ))}
       </TaskList>
     </PhaseContainer>
