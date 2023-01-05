@@ -16,8 +16,14 @@ const MyApp = ({ Component, pageProps }) => {
 
   const updateCompanyId=(companyId)=>{
     persistor.purge();
-    client.resetStore();
+    client.clearStore();
     setCompanyId(companyId);
+  }
+
+  const resetCompanyId =()=>{
+    removeCompanyId();
+    persistor.purge();
+    client.clearStore();
   }
   // TODO Add a theme provider for the common styles.
   return (
@@ -27,7 +33,7 @@ const MyApp = ({ Component, pageProps }) => {
       },
       setters: {
         updateCompanyId,
-        removeCompanyId,
+        resetCompanyId,
       }
     }} >
       <ApolloProvider client={client}>

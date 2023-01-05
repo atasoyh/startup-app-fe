@@ -1,1 +1,1 @@
-import {default} from "./create-company"
+export { default } from "./create-company"
