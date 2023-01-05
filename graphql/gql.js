@@ -24,6 +24,7 @@ export const ALL_PHASES_COMPLATIONS_QUERY = gql`
       phases {
         id
         tasks {
+          id
           completed
         }
       }
@@ -63,3 +64,13 @@ export const UPDATE_TASK_MUTATION = gql`
     }
   }
 `;
+
+export const CREATE_COMPANY_MUTATION = gql`
+  mutation createCompany($name: String!){
+    createCompany(input: {
+      name: $name
+    }){
+      id
+    }
+  }
+`

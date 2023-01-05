@@ -1,6 +1,7 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloClient } from "@apollo/client";
 import { CachePersistor, LocalStorageWrapper } from "apollo3-cache-persist";
 import { useEffect, useState } from "react";
+import cache from "./cache";
 
 
 const useApollo = () => {
@@ -9,27 +10,6 @@ const useApollo = () => {
 
   useEffect(() => {
     const init = async () => {
-      console.log("init")
-      const cache = new InMemoryCache({
-        typePolicies: {
-          Query: {
-            fields: {
-              task(_, { args, toReference }) {
-                return toReference({
-                  __typename: 'Task',
-                  id: args.id,
-                });
-              },
-              phase(_, { args, toReference }) {
-                return toReference({
-                  __typename: 'Phase',
-                  id: args.id,
-                });
-              },
-            },
-          },
-        },
-      });
       let newPersistor = new CachePersistor({
         cache,
         storage: new LocalStorageWrapper(window.localStorage),
@@ -47,10 +27,9 @@ const useApollo = () => {
       );
     }
 
-    init().catch(console.log);
+    init()
   }, []);
-  console.log(persistor?.purge);
-  return { client, clearLocaleCache: persistor?.purge };
+  return [ client, persistor ];
 }
 
 export default useApollo;

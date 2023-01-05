@@ -15,7 +15,7 @@ const Phase = ({ companyId, id, index }) => {
   const { data, loading, error } = useQuery(PHASE_QUERY, {
     variables: { id },
   });
-  const { isDisabled } = usePhaseEditableStatus({ companyId, id });
+  const [isDisabled] = usePhaseEditableStatus({ companyId, id });
   if (loading) {
     return <>Loading...</>;
   }

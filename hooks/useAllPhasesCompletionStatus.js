@@ -15,7 +15,7 @@ const useAllPhasesCompletionsStatus = ({ id }) => {
     }
   }, [data, data?.company, data?.company?.phases]);
 
-  return { allPhasesCompleted };
+  return [ allPhasesCompleted ];
 }
 
 export default useAllPhasesCompletionsStatus;

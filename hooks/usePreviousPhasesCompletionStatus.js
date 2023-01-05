@@ -20,7 +20,7 @@ const usePhaseEditableStatus = ({ companyId, id }) => {
     }
   }, [data, id]);
 
-  return { isDisabled };
+  return [ isDisabled ];
 }
 
 export default usePhaseEditableStatus;

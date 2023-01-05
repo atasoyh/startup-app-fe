@@ -1,8 +1,11 @@
 import Head from 'next/head'
-import Company from '../components/company'
-import { Button } from '../components/company/company.styles'
+import Company from '../components/company-progress'
+import CreateCompany from '../components/create-company/create-company'
+import { Button, Container } from '../components/shared.styles'
+import { useGeneralContext } from '../providers/general'
 
-export default function Home({clearCache}) {
+export default function Home({ clearCache }) {
+  const { values: { companyId } } = useGeneralContext()
   return (
     <>
       <Head>
@@ -11,8 +14,10 @@ export default function Home({clearCache}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Company id={"company_1"} />
-      <Button onClick={()=>clearCache()}>{`See what's next :)`}</Button>
+      <Container>
+        {!companyId && <CreateCompany />}
+        {!!companyId && <Company id={companyId} />}
+      </Container>
     </>
   )
 }
