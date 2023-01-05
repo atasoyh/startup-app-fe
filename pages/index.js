@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import Company from '../components/company'
+import { Button } from '../components/company/company.styles'
 
-export default function Home() {
+export default function Home({clearCache}) {
   return (
     <>
       <Head>
@@ -11,6 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Company id={"company_1"} />
+      <Button onClick={()=>clearCache()}>{`See what's next :)`}</Button>
     </>
   )
 }

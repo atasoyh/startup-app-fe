@@ -1,11 +1,18 @@
 
-import { ApolloProvider } from '@apollo/client';
-import client from '../graphql/apollo';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+
+import useApollo from '../graphql/useApollo';
 
 const MyApp = ({ Component, pageProps }) => {
+  const { client, clearLocaleCache } = useApollo();
+
+  if (!client) {
+    return <h2>Initializing app...</h2>;
+  }
+
   return (
     <ApolloProvider client={client}>
-      <Component {...pageProps} />
+      <Component {...pageProps} clearCache={clearLocaleCache} />
     </ApolloProvider>
   );
 }

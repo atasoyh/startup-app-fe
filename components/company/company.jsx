@@ -5,7 +5,7 @@ import { COMPANY_QUERY } from "../../graphql/gql";
 import useAllPhasesCompletionsStatus from "../../hooks/useAllPhasesCompletionStatus";
 
 const Company = ({ id }) => {
-  const { data, loading, error } = useQuery(COMPANY_QUERY, {
+  const { data, loading, error, client } = useQuery(COMPANY_QUERY, {
     variables: { id },
   });
   const { allPhasesCompleted } = useAllPhasesCompletionsStatus({ id });
@@ -28,7 +28,7 @@ const Company = ({ id }) => {
           <Phase id={phase.id} companyId={id} key={phase.id} index={index} />
         ))}
       </PhaseList>
-      <Button disabled={!allPhasesCompleted}>{`See what's next :)`}</Button>
+      <Button onClick={()=>client.restore()} disabled={!allPhasesCompleted}>{`See what's next :)`}</Button>
     </Container>
   );
 };

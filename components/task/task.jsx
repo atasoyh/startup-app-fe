@@ -16,7 +16,13 @@ const Task = ({ id, isDisabled }) => {
     return <>Error!</>;
   }
   return (
-    <TaskContainer onClick={updateTask}>
+    <TaskContainer
+      onClick={() => {
+        if (!isDisabled) {
+          updateTask();
+        }
+      }}
+    >
       <TaskInput
         type={"checkbox"}
         checked={task.completed}

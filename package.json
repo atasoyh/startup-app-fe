@@ -11,6 +11,7 @@
   "dependencies": {
     "@apollo/client": "^3.7.3",
     "@next/font": "13.1.1",
+    "apollo3-cache-persist": "^0.14.1",
     "eslint": "8.31.0",
     "eslint-config-next": "13.1.1",
     "graphql": "^16.6.0",

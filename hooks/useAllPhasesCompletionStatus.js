@@ -1,9 +1,9 @@
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { ALL_PHASES_COMPLATIONS_QUERY } from "../graphql/gql";
 
 const useAllPhasesCompletionsStatus = ({ id }) => {
-  const { data } = useLazyQuery(ALL_PHASES_COMPLATIONS_QUERY, { variables: { id } });
+  const { data } = useQuery(ALL_PHASES_COMPLATIONS_QUERY, { variables: { id } });
   const [allPhasesCompleted, setAllPhasesCompleted] = useState(false);
 
   useEffect(() => {
